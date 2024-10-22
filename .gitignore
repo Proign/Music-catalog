@@ -1,0 +1,5 @@
+.git/
+.idea/
+.vs/
+Music-catalog/bin
+Music-catalog/obj
