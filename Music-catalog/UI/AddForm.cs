@@ -30,6 +30,36 @@ namespace Music_catalog.UI
         private readonly TrackValidator _trackValidator;
         private readonly CollectionValidator _collectionValidator;
 
+        void LoadGenres()
+        {
+            _genreLoader.LoadGenresIntoComboBox(GenreComboBox);
+            _genreLoader.LoadGenresIntoComboBox(AlbumGenreComboBox);
+        }
+
+        void LoadArtists()
+        {
+            _artistLoader.LoadArtistsIntoComboBox(GetArtistComboBox);
+            _artistLoader.LoadArtistsIntoComboBox(TrackArtistComboBox);
+        }
+
+        void LoadAlbums()
+        {
+            _albumLoader.LoadAlbumsIntoComboBox(GetAlbumComboBox);
+        }
+
+        void LoadTracks()
+        {
+            _trackLoader.LoadTracksIntoCheckedListBox(CollectionCListBox);
+        }
+
+        void LoadDataIntoControls()
+        {
+            LoadGenres();
+            LoadArtists();
+            LoadAlbums();
+            LoadTracks();
+        }
+
         public AddForm(
             IGenreRepository genreRepository,
             IArtistRepository artistRepository,
@@ -70,18 +100,9 @@ namespace Music_catalog.UI
             _artistAdder = new ArtistAdder(_artistRepository, _artistValidator);
             _albumAdder = new AlbumAdder(_albumRepository, _albumValidator);
             _trackAdder = new TrackAdder(_trackRepository, _trackValidator);
-            _collectionAdder = new CollectionAdder(_collectionRepository, _collectionValidator); // Инициализация
+            _collectionAdder = new CollectionAdder(_collectionRepository, _collectionValidator);
 
-            // Загрузка жанров в ComboBox
-            _genreLoader.LoadGenresIntoComboBox(GenreComboBox);
-            _genreLoader.LoadGenresIntoComboBox(AlbumGenreComboBox);
-
-            _artistLoader.LoadArtistsIntoComboBox(GetArtistComboBox);
-            _artistLoader.LoadArtistsIntoComboBox(TrackArtistComboBox);
-
-            _albumLoader.LoadAlbumsIntoComboBox(GetAlbumComboBox);
-
-            _trackLoader.LoadTracksIntoCheckedListBox(CollectionCListBox);
+            LoadDataIntoControls();
         }
 
         // Метод для обработки нажатия кнопки "Добавить"
@@ -185,6 +206,8 @@ namespace Music_catalog.UI
             {
                 command.Execute();
             }
+
+            LoadDataIntoControls();
         }
     }
 }
